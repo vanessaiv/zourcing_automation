@@ -160,6 +160,7 @@ print(education)
 import pandas as pd
 entities = pd.read_csv (r'C:\\Users\Lenovo\Google Drive (vanessa.cruz@quantumworks.io)\@zourcing\entities.csv', header=None)
 entities[0][0].lower()
+entities
 
 educacion = []
 sentences = [' '.join(sentences[i].replace('\n', '').replace('\uf0b7', '').strip().split()) for i in range(len(sentences))]
