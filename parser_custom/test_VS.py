@@ -188,5 +188,5 @@ from fuzzywuzzy import process
 for entity in sentences:
     for ent in Entities:
         ratio = fuzz.partial_ratio(entity, ent)
-        if ratio > 70:
+        if ratio > 67:
             print(entity, ent, ratio)
