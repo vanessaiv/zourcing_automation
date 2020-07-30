@@ -157,24 +157,36 @@ for key in edu.keys():
     else:
         education.append(key)
 print(education)
-import pandas as pd
-entities = pd.read_csv (r'C:\\Users\Lenovo\Google Drive (vanessa.cruz@quantumworks.io)\@zourcing\entities.csv', header=None)
-entities[0][0].lower()
-entities
+
+from entities_education import entities as Entities
+Entities
+Entities = [' '.join(re.findall(r'\w+', Entities[i].lower(), flags = re.UNICODE)) for i in range(len(Entities))]
+sentence = ' '.join(re.findall(r'\w+', sentences[-17].lower(), flags = re.UNICODE))
 
 educacion = []
 sentences = [' '.join(sentences[i].replace('\n', '').replace('\uf0b7', '').strip().split()) for i in range(len(sentences))]
-sentences[-17]
-for index, text in enumerate(sentences):
-    for entity in entities[0]:
-        if entity.lower() in text.lower():
-            educacion.append(entity)
+sentences = [' '.join(re.findall(r'\w+', sentences[i].lower(), flags = re.UNICODE)) for i in range(len(sentences))]
+sentences = [re.sub(r'\W+', ' ', entity) for entity in sentences]
+sentences
 
-educacion
-type(sentences[0])
-import re
-for j in range(len(sentences)):
-    for i in range(len(entities[0])):
-        if re.search(entities[0][i].lower(), sentences[j].lower()):
-            educacion.append(entities[0][i])
-educacion
+from spacy import displacy
+from collections import Counter
+nlp = spacy.load('es_core_news_sm')
+
+chunk = [nlp(sentences[i]) for i in range(len(sentences))]
+for i in range(len(chunk)):
+    chunk[i] = [(X.text, X.label_) for X in chunk[i].ents if X.label_ == 'ORG']
+
+chunkE = [item[0] for sublist in chunk for item in sublist if sublist]
+chunkE
+#text = nlp(sentences[19])
+#print([(X.text, X.label_) for X in text.ents])
+
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+for entity in sentences:
+    for ent in Entities:
+        ratio = fuzz.partial_ratio(entity, ent)
+        if ratio > 70:
+            print(entity, ent, ratio)

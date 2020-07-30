@@ -4,6 +4,7 @@ import time
 from bs4 import BeautifulSoup
 from pandas import DataFrame as df
 import unidecode
+import re
 
 page = requests.get('http://sistemas.anuies.mx/perl/directorios/reprec1.pl')
 page
@@ -16,6 +17,7 @@ entities = [' '.join(entities[i].replace('\n', '').replace('\r', '').replace(','
 stopwords = ['centro', 'universidad', 'escuela']
 
 entitites = [entities[i].replace('UNIVERSIDAD', '').strip() for i in range(len(entities))]
-entities
+#check
+entities = [re.sub(r'\W+', ' ', entity) for entity in entities]
 #[strip_accents(entities[i]) for i in range(len(entities))]
 #df(entities[1:]).to_csv('entities.csv',encoding='utf8', index=False, header=None)
