@@ -15,7 +15,7 @@ cv_path = '../CVS/'
 
 ###############################################################################
 # Extract text
-pdf = 7  # Buenos: 5, 6; Malos: 1, 11, 12
+pdf = 3  # Buenos: 5, 6; Malos: 1, 11, 12
 
 # from pdf
 text = extract_text_from_pdf(cv_path+cvs[pdf])
@@ -161,7 +161,6 @@ print(education)
 from entities_education import entities as Entities
 Entities
 Entities = [' '.join(re.findall(r'\w+', Entities[i].lower(), flags = re.UNICODE)) for i in range(len(Entities))]
-sentence = ' '.join(re.findall(r'\w+', sentences[-17].lower(), flags = re.UNICODE))
 
 educacion = []
 sentences = [' '.join(sentences[i].replace('\n', '').replace('\uf0b7', '').strip().split()) for i in range(len(sentences))]
@@ -188,5 +187,9 @@ from fuzzywuzzy import process
 for entity in sentences:
     for ent in Entities:
         ratio = fuzz.partial_ratio(entity, ent)
-        if ratio > 67:
+        if ratio > 90:
             print(entity, ent, ratio)
+
+#CV 6 con ratio 90
+#CV 2 con ratio 90*
+#CV 3 con ratio 90
