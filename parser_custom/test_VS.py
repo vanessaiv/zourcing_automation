@@ -190,6 +190,7 @@ for entity in sentences:
         if ratio > 90:
             print(entity, ent, ratio)
 
+print(ratio)
 #CV 6 con ratio 90
 #CV 2 con ratio 90*
 #CV 3 con ratio 90
